@@ -14,6 +14,7 @@
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/number"
+        android:text="@string/phone_example"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/message"
+        android:text="@string/text_example"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
@@ -28,6 +30,7 @@
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/time"
+        android:text="@string/time_example"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
