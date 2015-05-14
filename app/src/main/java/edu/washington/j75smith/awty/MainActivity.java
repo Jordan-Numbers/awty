@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
         alarmIntent = PendingIntent.getBroadcast(this, 0, stuffing, 0);
         if(theButton.getText().equals("Start")){
             //startSending
-            int millis = Math.round(interval) * 1000;
+            int millis = Math.round(interval * 60000);
             manager.setRepeating(AlarmManager.RTC,
                                  System.currentTimeMillis() + millis, millis, alarmIntent);
             theButton.setText(R.string.btn_stop);
