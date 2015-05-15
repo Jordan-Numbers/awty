@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,32 +48,46 @@ public class MainActivity extends Activity {
     }
 
     private void startStop(){
-        Button theButton = (Button) findViewById(R.id.btn_send);
-        //update message and interval
-        this.phone = ((EditText) findViewById(R.id.number)).getText().toString();
-        this.message = ((EditText) findViewById(R.id.message)).getText().toString();
+        String field_phone = ((Editable) ((EditText) findViewById(R.id.number)).getText()).toString();
+        String field_text = ((Editable) ((EditText) findViewById(R.id.message)).getText()).toString();;
+        String field_time = ((Editable) ((EditText) findViewById(R.id.time)).getText()).toString();
+        if (!field_time.equals("")) {
+            Float given_time = Float.parseFloat(field_time);
+            if (!field_phone.equals("") && !field_text.equals("") && given_time > 0) {
+                Button theButton = (Button) findViewById(R.id.btn_send);
+                //update message and interval
+                this.phone = field_phone;
+                this.message = field_text;
 
-        //get the interval in minutes
-        this.interval = Float.parseFloat(((EditText) findViewById(R.id.time)).getText().toString());
+                //get the interval in minutes
+                this.interval = given_time;
 
-        //get the system manager for alarms
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                //get the system manager for alarms
+                AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        //make the pending intent and its intent
-        Intent stuffing = new Intent();
-        stuffing.setAction("edu.washington.j75smith.awty");
-        alarmIntent = PendingIntent.getBroadcast(this, 0, stuffing, 0);
-        if(theButton.getText().equals("Start")){
-            //startSending
-            int millis = Math.round(interval * 60000);
-            manager.setRepeating(AlarmManager.RTC,
-                                 System.currentTimeMillis() + millis, millis, alarmIntent);
-            theButton.setText(R.string.btn_stop);
-        } else {
-            //stop sending
-            manager.cancel(alarmIntent);
-            alarmIntent.cancel();
-            theButton.setText(R.string.btn_start);
+                //make the pending intent and its intent
+                Intent stuffing = new Intent();
+                stuffing.setAction("edu.washington.j75smith.awty");
+                alarmIntent = PendingIntent.getBroadcast(this, 0, stuffing, 0);
+                if (theButton.getText().equals("Start")) {
+                    //startSending
+                    int millis = Math.round(interval * 60000);
+                    manager.setRepeating(AlarmManager.RTC,
+                            System.currentTimeMillis() + millis, millis, alarmIntent);
+                    theButton.setText(R.string.btn_stop);
+                } else {
+                    //stop sending
+                    manager.cancel(alarmIntent);
+                    alarmIntent.cancel();
+                    theButton.setText(R.string.btn_start);
+                }
+            }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(this.alarmReceiver);
     }
 }
