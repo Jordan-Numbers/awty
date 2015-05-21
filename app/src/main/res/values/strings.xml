@@ -6,9 +6,10 @@
     <string name="text_label">Enter Your Message:</string>
 
     <string name="text_example">Are we there yet?</string>
-    <string name="phone_example">425-555-8341</string>
+    <string name="phone_example">425\-555\-8341</string>
     <string name="time_example">5</string>
 
     <string name="btn_start">Start</string>
     <string name="btn_stop">Stop</string>
+    <string name="warning">WARNING: This will send text messages on your behalf. You will not see these messages.</string>
 </resources>

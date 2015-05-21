@@ -8,11 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -32,7 +32,9 @@ public class MainActivity extends Activity {
         alarmReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Toast.makeText(MainActivity.this, phone + ": " + message, Toast.LENGTH_SHORT).show();
+                //send text
+                SmsManager manager = SmsManager.getDefault();
+                manager.sendTextMessage(phone, null,  message, null, null);
             }
         };
 
